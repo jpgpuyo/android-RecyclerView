@@ -19,7 +19,6 @@ package com.example.android.recyclerview;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -33,7 +32,6 @@ import com.example.android.common.logger.LogFragment;
 import com.example.android.common.logger.LogWrapper;
 import com.example.android.common.logger.MessageOnlyLogFilter;
 import com.example.android.common.navigation.Navigator;
-import com.example.android.recyclerview.google.GoogleFragment;
 
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
@@ -68,7 +66,7 @@ public class MainActivity extends SampleActivityBase implements NavigationView.O
         toggle.syncState();
 
         if (savedInstanceState == null) {
-           navigator.goToGoogleFragment(getSupportFragmentManager(), R.id.sample_content_fragment);
+           navigator.loadGoogleFragment(getSupportFragmentManager());
         }
     }
 
@@ -129,13 +127,13 @@ public class MainActivity extends SampleActivityBase implements NavigationView.O
         int id = item.getItemId();
         switch (id) {
             case R.id.drawer_menu_google:
-                navigator.goToGoogleFragment(getSupportFragmentManager(), R.id.sample_content_fragment);
+                navigator.loadGoogleFragment(getSupportFragmentManager());
                 break;
             case R.id.drawer_menu_renderers:
-                //TODO
+                navigator.loadRenderersFragment(getSupportFragmentManager());
                 break;
             case R.id.drawer_menu_groupie:
-                //TODO
+                navigator.loadGroupieFragment(getSupportFragmentManager());
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
