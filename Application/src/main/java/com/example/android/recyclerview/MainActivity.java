@@ -49,6 +49,7 @@ public class MainActivity extends SampleActivityBase implements NavigationView.O
     // Whether the Log Fragment is currently shown
     private boolean mLogShown;
 
+    private NavigationView navigationView;
     private Navigator navigator;
 
     @Override
@@ -57,6 +58,9 @@ public class MainActivity extends SampleActivityBase implements NavigationView.O
         setContentView(R.layout.activity_main);
 
         navigator = new Navigator();
+
+        navigationView = (NavigationView) findViewById(R.id.drawer_navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name);
