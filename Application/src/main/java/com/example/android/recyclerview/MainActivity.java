@@ -28,6 +28,7 @@ import com.example.android.common.logger.Log;
 import com.example.android.common.logger.LogFragment;
 import com.example.android.common.logger.LogWrapper;
 import com.example.android.common.logger.MessageOnlyLogFilter;
+import com.example.android.recyclerview.google.GoogleFragment;
 
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
@@ -50,7 +51,7 @@ public class MainActivity extends SampleActivityBase {
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            RecyclerViewFragment fragment = new RecyclerViewFragment();
+            GoogleFragment fragment = new GoogleFragment();
             transaction.replace(R.id.sample_content_fragment, fragment);
             transaction.commit();
         }
