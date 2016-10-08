@@ -18,7 +18,11 @@
 package com.example.android.recyclerview;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ViewAnimator;
@@ -28,6 +32,7 @@ import com.example.android.common.logger.Log;
 import com.example.android.common.logger.LogFragment;
 import com.example.android.common.logger.LogWrapper;
 import com.example.android.common.logger.MessageOnlyLogFilter;
+import com.example.android.common.navigation.Navigator;
 import com.example.android.recyclerview.google.GoogleFragment;
 
 /**
@@ -37,23 +42,29 @@ import com.example.android.recyclerview.google.GoogleFragment;
  * For devices with displays with a width of 720dp or greater, the sample log is always visible,
  * on other devices it's visibility is controlled by an item on the Action Bar.
  */
-public class MainActivity extends SampleActivityBase {
+public class MainActivity extends SampleActivityBase implements NavigationView.OnNavigationItemSelectedListener{
 
     public static final String TAG = "MainActivity";
 
     // Whether the Log Fragment is currently shown
     private boolean mLogShown;
 
+    private Navigator navigator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        navigator = new Navigator();
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
         if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            GoogleFragment fragment = new GoogleFragment();
-            transaction.replace(R.id.sample_content_fragment, fragment);
-            transaction.commit();
+           navigator.goToGoogleFragment(getSupportFragmentManager(), R.id.sample_content_fragment);
         }
     }
 
@@ -107,5 +118,26 @@ public class MainActivity extends SampleActivityBase {
         msgFilter.setNext(logFragment.getLogView());
 
         Log.i(TAG, "Ready");
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.drawer_menu_google:
+                navigator.goToGoogleFragment(getSupportFragmentManager(), R.id.sample_content_fragment);
+                break;
+            case R.id.drawer_menu_renderers:
+                //TODO
+                break;
+            case R.id.drawer_menu_groupie:
+                //TODO
+                break;
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        return true;
     }
 }

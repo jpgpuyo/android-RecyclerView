@@ -19,4 +19,7 @@
     <string name="element_text">Element</string>
     <string name="grid_layout_manager">Grid Layout Manager</string>
     <string name="linear_layout_manager">Linear Layout Manager</string>
+    <string name="drawer_menu_google">Google</string>
+    <string name="drawer_menu_renderers">Renderers</string>
+    <string name="drawer_menu_groupie">Groupie</string>
 </resources>
