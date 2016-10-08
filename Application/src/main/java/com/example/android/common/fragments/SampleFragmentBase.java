@@ -1,4 +1,4 @@
-package com.example.android.recyclerview;
+package com.example.android.common.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * BaseFragment created to avoid duplicate code
+ * SampleFragmentBase created to avoid duplicate code
  */
-public class BaseFragment extends Fragment {
+public class SampleFragmentBase extends Fragment {
 
     protected String[] mDataset;
     private static final int DATASET_COUNT = 60;

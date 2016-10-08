@@ -25,14 +25,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 
-import com.example.android.recyclerview.BaseFragment;
+import com.example.android.common.fragments.SampleFragmentBase;
 import com.example.android.recyclerview.R;
 
 /**
  * Demonstrates the use of {@link RecyclerView} with a {@link LinearLayoutManager} and a
  * {@link GridLayoutManager}.
  */
-public class GoogleFragment extends BaseFragment {
+public class GoogleFragment extends SampleFragmentBase {
 
     private static final String TAG = "GoogleFragment";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
