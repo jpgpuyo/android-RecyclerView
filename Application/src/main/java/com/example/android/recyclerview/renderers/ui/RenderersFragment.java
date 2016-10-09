@@ -1,18 +1,18 @@
 /*
-* Copyright (C) 2014 The Android Open Source Project
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright (C) 2014 Pedro Vicente Gómez Sánchez.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.example.android.recyclerview.renderers.ui;
 
@@ -25,14 +25,12 @@ import android.view.ViewGroup;
 
 import com.example.android.common.fragments.SampleFragmentBase;
 import com.example.android.recyclerview.R;
-import com.example.android.recyclerview.renderers.model.SampleModel;
-import com.pedrogomez.renderers.ListAdapteeCollection;
+import com.example.android.recyclerview.renderers.data.RandomVideoCollectionGenerator;
+import com.example.android.recyclerview.renderers.model.Video;
+import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.RVRendererAdapter;
 import com.pedrogomez.renderers.Renderer;
 import com.pedrogomez.renderers.RendererBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,9 +42,10 @@ import butterknife.ButterKnife;
 public class RenderersFragment extends SampleFragmentBase {
 
     private static final String TAG = "RenderersFragment";
+    private static final int VIDEO_COUNT = 5;
 
     @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
-    private RVRendererAdapter<SampleModel> adapter;
+    private RVRendererAdapter<Video> adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,12 +67,14 @@ public class RenderersFragment extends SampleFragmentBase {
     }
 
     private void initAdapter() {
-        List<SampleModel> sampleModelList = transformDatasetToSampleModelList();
 
-        Renderer<SampleModel> renderer = new SampleRenderer();
-        RendererBuilder<SampleModel> rendererBuilder = new RendererBuilder(renderer);
+        RandomVideoCollectionGenerator randomVideoCollectionGenerator = new RandomVideoCollectionGenerator();
+        AdapteeCollection<Video> videoCollection = randomVideoCollectionGenerator.generateListAdapteeVideoCollection(VIDEO_COUNT);
 
-        adapter = new RVRendererAdapter(rendererBuilder, new ListAdapteeCollection<>(sampleModelList));
+        Renderer<Video> renderer = new VideoRenderer();
+        RendererBuilder<Video> rendererBuilder = new RendererBuilder(renderer);
+
+        adapter = new RVRendererAdapter(rendererBuilder, videoCollection);
     }
 
     private void initRecyclerView() {
@@ -84,17 +85,5 @@ public class RenderersFragment extends SampleFragmentBase {
     @Override
     protected int getResourceFragmentDescription() {
         return R.string.renderers_fragment_description;
-    }
-
-    private List<SampleModel> transformDatasetToSampleModelList() {
-        List<SampleModel> sampleModelList = new ArrayList();
-        for (int i = 0; i < mDataset.length; i++) {
-            String datasetElement = mDataset[i];
-            SampleModel sampleModel = new SampleModel();
-            sampleModel.setPosition(i);
-            sampleModel.setText(datasetElement);
-            sampleModelList.add(sampleModel);
-        }
-        return sampleModelList;
     }
 }
