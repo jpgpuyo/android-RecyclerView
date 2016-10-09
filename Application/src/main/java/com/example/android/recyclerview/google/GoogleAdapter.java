@@ -14,9 +14,10 @@
 * limitations under the License.
 */
 
-package com.example.android.recyclerview;
+package com.example.android.recyclerview.google;
 
 import com.example.android.common.logger.Log;
+import com.example.android.recyclerview.R;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,8 +28,8 @@ import android.widget.TextView;
 /**
  * Provide views to RecyclerView with data from mDataSet.
  */
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
-    private static final String TAG = "CustomAdapter";
+public class GoogleAdapter extends RecyclerView.Adapter<GoogleAdapter.ViewHolder> {
+    private static final String TAG = "GoogleAdapter";
 
     private String[] mDataSet;
 
@@ -62,7 +63,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public CustomAdapter(String[] dataSet) {
+    public GoogleAdapter(String[] dataSet) {
         mDataSet = dataSet;
     }
 

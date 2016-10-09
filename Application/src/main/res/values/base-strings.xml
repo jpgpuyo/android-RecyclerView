@@ -17,7 +17,7 @@
 
 <resources>
     <string name="app_name">RecyclerView</string>
-    <string name="intro_message">
+    <string name="google_fragment_description">
         <![CDATA[
         
             
@@ -26,6 +26,28 @@
                 their ViewHolder. The log also displays elements that you tap.
             
         
+        ]]>
+    </string>
+    <string name="renderers_fragment_description">
+        <![CDATA[
+
+
+                Demonstration of using RecyclerView with library Renderers to create a vertical list.
+                Tap \"SHOW LOG\" to view elements as they are bound to
+                their ViewHolder. The log also displays elements that you tap.
+
+
+        ]]>
+    </string>
+    <string name="groupie_fragment_description">
+        <![CDATA[
+
+
+                Demonstration of using RecyclerView with library Groupie to create a vertical list.
+                Tap \"SHOW LOG\" to view elements as they are bound to
+                their ViewHolder. The log also displays elements that you tap.
+
+
         ]]>
     </string>
 </resources>

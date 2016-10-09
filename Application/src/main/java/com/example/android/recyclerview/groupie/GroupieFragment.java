@@ -14,10 +14,9 @@
 * limitations under the License.
 */
 
-package com.example.android.recyclerview;
+package com.example.android.recyclerview.groupie;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,16 +25,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 
+import com.example.android.common.fragments.SampleFragmentBase;
+import com.example.android.recyclerview.R;
+import com.example.android.recyclerview.google.GoogleAdapter;
+
 /**
  * Demonstrates the use of {@link RecyclerView} with a {@link LinearLayoutManager} and a
  * {@link GridLayoutManager}.
  */
-public class RecyclerViewFragment extends Fragment {
+public class GroupieFragment extends SampleFragmentBase {
 
-    private static final String TAG = "RecyclerViewFragment";
+    private static final String TAG = "GroupieFragment";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
-    private static final int DATASET_COUNT = 60;
 
     private enum LayoutManagerType {
         GRID_LAYOUT_MANAGER,
@@ -48,17 +50,12 @@ public class RecyclerViewFragment extends Fragment {
     protected RadioButton mGridLayoutRadioButton;
 
     protected RecyclerView mRecyclerView;
-    protected CustomAdapter mAdapter;
+    protected GoogleAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected String[] mDataset;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Initialize dataset, this data would usually come from a local content provider or
-        // remote server.
-        initDataset();
     }
 
     @Override
@@ -84,8 +81,8 @@ public class RecyclerViewFragment extends Fragment {
         }
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        mAdapter = new CustomAdapter(mDataset);
-        // Set CustomAdapter as the adapter for RecyclerView.
+        mAdapter = new GoogleAdapter(mDataset);
+        // Set GoogleAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // END_INCLUDE(initializeRecyclerView)
 
@@ -106,6 +103,11 @@ public class RecyclerViewFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    protected int getResourceFragmentDescription() {
+        return R.string.groupie_fragment_description;
     }
 
     /**
@@ -145,16 +147,5 @@ public class RecyclerViewFragment extends Fragment {
         // Save currently selected layout manager.
         savedInstanceState.putSerializable(KEY_LAYOUT_MANAGER, mCurrentLayoutManagerType);
         super.onSaveInstanceState(savedInstanceState);
-    }
-
-    /**
-     * Generates Strings for RecyclerView's adapter. This data would usually come
-     * from a local content provider or remote server.
-     */
-    private void initDataset() {
-        mDataset = new String[DATASET_COUNT];
-        for (int i = 0; i < DATASET_COUNT; i++) {
-            mDataset[i] = "This is element #" + i;
-        }
     }
 }

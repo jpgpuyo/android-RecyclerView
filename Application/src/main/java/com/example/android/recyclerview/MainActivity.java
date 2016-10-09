@@ -18,9 +18,14 @@
 package com.example.android.recyclerview;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.support.annotation.StringRes;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.ViewAnimator;
 
 import com.example.android.common.activities.SampleActivityBase;
@@ -28,6 +33,8 @@ import com.example.android.common.logger.Log;
 import com.example.android.common.logger.LogFragment;
 import com.example.android.common.logger.LogWrapper;
 import com.example.android.common.logger.MessageOnlyLogFilter;
+import com.example.android.common.navigation.Navigator;
+import com.example.android.common.views.MainView;
 
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
@@ -36,23 +43,38 @@ import com.example.android.common.logger.MessageOnlyLogFilter;
  * For devices with displays with a width of 720dp or greater, the sample log is always visible,
  * on other devices it's visibility is controlled by an item on the Action Bar.
  */
-public class MainActivity extends SampleActivityBase {
+public class MainActivity extends SampleActivityBase
+        implements NavigationView.OnNavigationItemSelectedListener,
+        MainView {
 
     public static final String TAG = "MainActivity";
 
     // Whether the Log Fragment is currently shown
     private boolean mLogShown;
 
+    private NavigationView navigationView;
+    private Navigator navigator;
+    private TextView tvDescription;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        navigator = new Navigator();
+
+        navigationView = (NavigationView) findViewById(R.id.drawer_navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        tvDescription = (TextView) findViewById(R.id.tv_description);
+
         if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            RecyclerViewFragment fragment = new RecyclerViewFragment();
-            transaction.replace(R.id.sample_content_fragment, fragment);
-            transaction.commit();
+           navigator.loadGoogleFragment(getSupportFragmentManager());
         }
     }
 
@@ -106,5 +128,31 @@ public class MainActivity extends SampleActivityBase {
         msgFilter.setNext(logFragment.getLogView());
 
         Log.i(TAG, "Ready");
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.drawer_menu_google:
+                navigator.loadGoogleFragment(getSupportFragmentManager());
+                break;
+            case R.id.drawer_menu_renderers:
+                navigator.loadRenderersFragment(getSupportFragmentManager());
+                break;
+            case R.id.drawer_menu_groupie:
+                navigator.loadGroupieFragment(getSupportFragmentManager());
+                break;
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        return true;
+    }
+
+    @Override
+    public void loadFragmentDescription(@StringRes int resFragmentDescription) {
+        tvDescription.setText(resFragmentDescription);
     }
 }
