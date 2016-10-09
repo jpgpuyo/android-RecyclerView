@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import com.example.android.recyclerview.R;
 import com.example.android.recyclerview.google.GoogleFragment;
 import com.example.android.recyclerview.groupie.GroupieFragment;
-import com.example.android.recyclerview.renderers.RenderersFragment;
+import com.example.android.recyclerview.renderers.ui.RenderersFragment;
 
 public class Navigator {
 
