@@ -104,6 +104,11 @@ public class GoogleFragment extends SampleFragmentBase {
         return rootView;
     }
 
+    @Override
+    protected int getResourceFragmentDescription() {
+        return R.string.google_fragment_description;
+    }
+
     /**
      * Set RecyclerView's LayoutManager to the one given.
      *

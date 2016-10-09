@@ -105,6 +105,11 @@ public class RenderersFragment extends SampleFragmentBase {
         return rootView;
     }
 
+    @Override
+    protected int getResourceFragmentDescription() {
+        return R.string.renderers_fragment_description;
+    }
+
     /**
      * Set RecyclerView's LayoutManager to the one given.
      *

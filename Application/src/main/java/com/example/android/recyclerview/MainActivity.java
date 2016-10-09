@@ -18,12 +18,14 @@
 package com.example.android.recyclerview;
 
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.ViewAnimator;
 
 import com.example.android.common.activities.SampleActivityBase;
@@ -32,6 +34,7 @@ import com.example.android.common.logger.LogFragment;
 import com.example.android.common.logger.LogWrapper;
 import com.example.android.common.logger.MessageOnlyLogFilter;
 import com.example.android.common.navigation.Navigator;
+import com.example.android.common.views.MainView;
 
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
@@ -40,7 +43,9 @@ import com.example.android.common.navigation.Navigator;
  * For devices with displays with a width of 720dp or greater, the sample log is always visible,
  * on other devices it's visibility is controlled by an item on the Action Bar.
  */
-public class MainActivity extends SampleActivityBase implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends SampleActivityBase
+        implements NavigationView.OnNavigationItemSelectedListener,
+        MainView {
 
     public static final String TAG = "MainActivity";
 
@@ -49,6 +54,7 @@ public class MainActivity extends SampleActivityBase implements NavigationView.O
 
     private NavigationView navigationView;
     private Navigator navigator;
+    private TextView tvDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,8 @@ public class MainActivity extends SampleActivityBase implements NavigationView.O
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        tvDescription = (TextView) findViewById(R.id.tv_description);
 
         if (savedInstanceState == null) {
            navigator.loadGoogleFragment(getSupportFragmentManager());
@@ -141,5 +149,10 @@ public class MainActivity extends SampleActivityBase implements NavigationView.O
             drawer.closeDrawer(GravityCompat.START);
         }
         return true;
+    }
+
+    @Override
+    public void loadFragmentDescription(@StringRes int resFragmentDescription) {
+        tvDescription.setText(resFragmentDescription);
     }
 }
